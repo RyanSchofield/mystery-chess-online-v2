@@ -33,6 +33,8 @@ export class GameboardComponent implements OnInit {
 	public spectatorNumber: number = -1;
 	public playerColor?: Alliance;
 	public socket: any;
+
+	public AllianceEnum = Alliance;
 	
 	private _unhighlightedTiles : any[][];
 	private _whiteReserve?: any[];
@@ -54,7 +56,8 @@ export class GameboardComponent implements OnInit {
 		this.highlightedTiles = GameHelper.noHighlightedTiles(); 
 		this.threatTiles = GameHelper.noHighlightedTiles();
 		this._unhighlightedTiles = GameHelper.noHighlightedTiles();
-		this.socket= io("http://192.168.1.9:3000");
+		// this.socket= io("http://192.168.1.9:3000");
+		this.socket = io("http://192.168.50.12:3000");
 		//test
 		// this.socket = io(); // DEBUG
 		// console.log('cookie', document.cookie);
@@ -285,15 +288,15 @@ export class GameboardComponent implements OnInit {
 
 			// console.log('hellloooo')
 
-			// this.socket.emit("move",  {
-			// 	tiles: this.tiles,
-			// 	currentTurn: this.currentTurn,
-			// 	whiteReserve: this._whiteReserve,
-			// 	blackReserve: this._blackReserve,
-			// 	whiteGraveyard: this.whiteGraveyard,
-			// 	blackGraveyard: this.blackGraveyard,
-			// 	lastMoveCoordinates: this.lastMoveCoordinates
-			// });
+			this.socket.emit("move",  {
+				tiles: this.tiles,
+				currentTurn: this.currentTurn,
+				whiteReserve: this._whiteReserve,
+				blackReserve: this._blackReserve,
+				whiteGraveyard: this.whiteGraveyard,
+				blackGraveyard: this.blackGraveyard,
+				lastMoveCoordinates: this.lastMoveCoordinates
+			});
 
 			// console.log('eh');
 

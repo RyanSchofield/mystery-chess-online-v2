@@ -4,7 +4,7 @@
 <div class="game-container">
 
 <div class="play-area">
-  <div class="black-graveyard">
+  <div class="black-graveyard" *ngIf="playerColor == AllianceEnum.BLACK">
     <div class="captured-piece" *ngFor="let piece of blackGraveyard; let i = index">
       <div class="piece-image" 
         [style.background-color]="piece.isMysterious ? 'gray' : 'none'" 
@@ -18,6 +18,19 @@
       </div>
     </div>
   </div>
+  <div class="white-graveyard"  *ngIf="playerColor == AllianceEnum.WHITE">
+    <div class="captured-piece" *ngFor="let piece of whiteGraveyard; let i = index">
+     <div class="piece-image" 
+      [style.background-color]="piece.isMysterious ? 'gray' : 'none'" 
+      [style.border-radius]="'75%'"
+      (click)="piece.isRevealed = (!piece.isRevealed || !piece.isMysterious) && this.playerColor !== piece.alliance"
+     >
+      <img [src]="piece.image"
+        [class.hidden]="!piece.isRevealed && piece.isMysterious"
+      >
+     </div>
+    </div>
+</div>
   <div class="gameboard" cdkDropListGroup [ngClass]="this.playerColor == 1 ? 'white-view' : 'black-view'">
     <div class="gameboard-row" *ngFor="let row of tiles; let i = index" (cdkDropListDropped)="drop($any($event))" [ngClass]="this.playerColor == 1 ? 'white-view' : 'black-view'">
       <div 
@@ -41,7 +54,21 @@
     </div>
   </div>
 
-    <div class="white-graveyard">
+  <div class="black-graveyard" *ngIf="playerColor == AllianceEnum.WHITE">
+    <div class="captured-piece" *ngFor="let piece of blackGraveyard; let i = index">
+      <div class="piece-image" 
+        [style.background-color]="piece.isMysterious ? 'gray' : 'none'" 
+        [style.border-radius]="'75%'"
+        (click)="piece.isRevealed = (!piece.isRevealed || !piece.isMysterious) && this.playerColor !== piece.alliance"
+      >
+        <img [src]="piece.image"
+          [class.hidden]="!piece.isRevealed && piece.isMysterious"
+          
+        >
+      </div>
+    </div>
+  </div>
+    <div class="white-graveyard"  *ngIf="playerColor == AllianceEnum.BLACK">
       <div class="captured-piece" *ngFor="let piece of whiteGraveyard; let i = index">
        <div class="piece-image" 
         [style.background-color]="piece.isMysterious ? 'gray' : 'none'" 
