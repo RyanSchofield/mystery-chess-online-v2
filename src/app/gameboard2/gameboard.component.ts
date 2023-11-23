@@ -57,9 +57,9 @@ export class GameboardComponent implements OnInit {
 		this.threatTiles = GameHelper.noHighlightedTiles();
 		this._unhighlightedTiles = GameHelper.noHighlightedTiles();
 		// this.socket= io("http://192.168.1.9:3000");
-		this.socket = io("http://192.168.50.12:3000");
+		// this.socket = io("http://192.168.50.12:3000");
 		//test
-		// this.socket = io(); // DEBUG
+		this.socket = io(); // DEBUG
 		// console.log('cookie', document.cookie);
 		// document.cookie = "username=John Doe, expires=Thu, 18 Dec 2013 12:00:00 UTC";
 		// console.log('cookie', document.cookie);
