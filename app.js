@@ -69,6 +69,12 @@ var messages = [];
 
 Socketio.on("connection", socket => {
     // console.log('connection');
+
+    /**
+     * we will push to an array of connections.
+     * we need to store player1, player2, spectators, numSpectators, moves, and messages for each game.
+     */
+
     let socketStatus;
 
     socket.emit("messages", {
