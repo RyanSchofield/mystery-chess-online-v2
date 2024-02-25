@@ -8,11 +8,13 @@ import { AppComponent } from './app.component';
 import { GameboardComponent } from './gameboard2/gameboard.component';
 import { ChatComponent } from './chat/chat.component';
 import { LoginComponent } from './login/login.component';
+import { LobbyComponent } from './lobby/lobby.component';
 
 const appRoutes: Routes = [
   // { path: '/', component: GameboardComponent },
   { path: 'start', component: LoginComponent },
-  { path: 'game', component: GameboardComponent },
+  { path: 'lobby', component: LobbyComponent },
+  { path: 'game/:id', component: GameboardComponent },
   { path: '', component: LoginComponent }
 ];
 
@@ -21,7 +23,8 @@ const appRoutes: Routes = [
     AppComponent,
     GameboardComponent,
     ChatComponent,
-    LoginComponent
+    LoginComponent,
+    LobbyComponent
   ],
 	imports: [
 	  // HttpClientModule,

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, HostListener } from '@angular/core';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { io } from "socket.io-client";
 
@@ -12,6 +12,8 @@ import { Pawn } from './pieces/pawn/pawn.piece';
 import { ChatComponent } from '../chat/chat.component';
 import { GameHelper } from '../game/game.helper';
 import { Bot } from '../bot/bot.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
 
 
 @Component({
@@ -51,12 +53,21 @@ export class GameboardComponent implements OnInit {
 
 	public playerName?: string ;
 
-	constructor() { 
+	@HostListener('window:popstate', ['$event'])
+	onPopState(event: any) {
+		this.socket.emit('exit');
+	}
+
+
+	constructor(
+		private route: ActivatedRoute,
+		private router: Router
+	) { 
 		this.currentTurn = Alliance.WHITE; 
 		this.highlightedTiles = GameHelper.noHighlightedTiles(); 
 		this.threatTiles = GameHelper.noHighlightedTiles();
 		this._unhighlightedTiles = GameHelper.noHighlightedTiles();
-		// this.socket= io("http://192.168.1.9:3000");
+		// this.socket = io("http://192.168.1.6:3000");
 		// this.socket = io("http://192.168.50.12:3000");
 		//test
 		this.socket = io(); // DEBUG
@@ -66,19 +77,35 @@ export class GameboardComponent implements OnInit {
 		// console.log('username', localStorage.getItem('username'));
 		let username = localStorage.getItem('username');
 		if (username) {
-			this.playerName = localStorage.getItem('username') as string;
+			this.playerName = username as string;
 			if (username === 'bot tester') {
 				this.engageBot = true;
 			}
 		}
 
+		this.router.events.subscribe((data: any) => console.log('router event', data));
+
+		this._initializeSocket();
+
+		console.log('game constructor, socket connected?', this.socket.connected);
+		// maybe emit here to actually join the game.. deals with back button from another page issue
+
 	}
 
 	ngOnInit(): void {
 		this._initializeGameboard();
-		this._initializeSocket();
+		console.log('ngOnInit, socket connected?', this.socket.connected)
+		// this._initializeSocket();
 		// console.log('username', localStorage.getItem('username'));
   	}
+
+	ngAfterViewInit() {
+		console.log('afterViewInit, socket connected?', this.socket.connected)
+	}
+
+	ngOnDestroy() {
+		console.log('destroyyyyy')
+	}
 
 	drag(event: any) {
 		let piece = event.source.data.piece;
@@ -346,14 +373,23 @@ export class GameboardComponent implements OnInit {
   		// audio.play();
 	}
 
-	private _initializeSocket() {
+	private async _initializeSocket() {
+		
+
+		let params = await firstValueFrom(this.route.params) as any;
+		if (!params?.id) {
+			console.log('no id, returning');
+			return;
+		}
+
+		
 		this.socket.on("moveUpdate", (data: any) => {
-			console.log('moveUpdate');
+			console.log('moveUpdate', data);
 			this._receiveMoveUpdate(data);
 		});
 
 		this.socket.on("setPlayerStatus", (data: any) => {
-			console.log("player status received");
+			console.log("player status received", data);
 			this._receivePlayerStatus(data);
 		});
 
@@ -362,6 +398,11 @@ export class GameboardComponent implements OnInit {
 			this.currentTurn = Alliance.WHITE;
 			this.threatTiles = GameHelper.noHighlightedTiles();
 		});
+
+		// this.socket.on('connect', () => console.log('connected'));
+		console.log('emitting join game');
+		this.socket.connect();
+		this.socket.emit("joinGame", {id: params.id, name: this.playerName});
 	}
 
 	private _receivePlayerStatus(data: any) {

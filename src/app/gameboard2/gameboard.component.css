@@ -1,3 +1,19 @@
+
+
+:host {
+  margin-top: 10%;
+}
+
+@media only screen and (max-width: 600px) {
+  :host {
+    margin-top: 90%;
+  }
+}
+
+.play-area {
+  margin-top: 0;
+}
+
 .game-container {
   display: flex;
   flex-direction: row;
@@ -22,6 +38,22 @@
 
 .game-info {
   align-items: center;
+  justify-content: center;
+  /* background-color: #7FB1B3; */
+  background-color: #9FC5C6;
+  border-radius: 10px;
+  border: 2px solid #aaa;
+}
+
+.player-info {
+  background-color: #fefefe;
+  border-radius: 4px;
+  padding: 4px;
+  margin-top: 20px;
+  width: 66%;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 0 3px 3px #aaa
 }
 
 .white-view.gameboard {
@@ -71,6 +103,10 @@
   flex-direction: row;
   width: 200px;
   height: 100px;
+
+  /* background-color: #8884; */
+  padding: 5px;
+  border-radius: 4px;
 }
 
 .black-graveyard {
@@ -78,6 +114,10 @@
   flex-direction: row;
   width: 200px;
   height: 100px;
+
+  /* background-color: #8884; */
+  padding: 5px;
+  border-radius: 4px;
 }
 
 .captured-piece {

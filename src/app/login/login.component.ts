@@ -27,7 +27,7 @@ export class LoginComponent {
   
         // You can navigate to another page or perform other actions here
         // For example, redirect to a dashboard:
-        this.router.navigate(['/game']);
+        this.router.navigate(['/lobby']);
       }
     }
 }

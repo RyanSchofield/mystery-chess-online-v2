@@ -1,0 +1,10 @@
+<div class="header">
+    Games
+</div>
+<ng-container *ngFor="let game of games">
+    <div (click)="joinGame(game)" class="game">
+        game: {{game.id}}<br/>
+        {{ game.player1Name }} - {{ game.player2Name }}
+    </div>
+</ng-container>
+<button (click)="createGame()" class="create-game">Create game</button>

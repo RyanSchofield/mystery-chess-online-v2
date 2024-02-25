@@ -121,12 +121,14 @@
     </div> -->
 
     <div class="game-info">
-      <p *ngIf="!isSpectator">Your color: {{ playerColor ? 'White' : 'Black'}}</p>
-      <p>Current turn: {{ currentTurn ? 'White' : 'Black' }}</p>
+      <div class="player-info">
+        <div *ngIf="!isSpectator">Your color: {{ playerColor ? 'White' : 'Black'}}</div>
+        <div>Current turn: {{ currentTurn ? 'White' : 'Black' }}</div>
+      </div>
       <div style="display: flex;padding: 15px; justify-content: space-around; ">
         <button type="button" (click)="refresh()">Restart game</button>
         <button type="button" (click)="undo()" *ngIf="playerColor != currentTurn">Undo</button>
-        <button type="button" (click)="getBotMove()" *ngIf="!engageBot">bot move</button>
+        <button type="button" (click)="getBotMove()" *ngIf="false && !engageBot">bot move</button>
       </div>
       <p *ngIf="message">{{message}}</p>
       <app-chat #chat [username]="this.isSpectator ? ('Spectator ' + spectatorNumber) : (this.playerColor == 1 ? 'Player 1' : 'Player 2')" [socket]="socket"></app-chat>
