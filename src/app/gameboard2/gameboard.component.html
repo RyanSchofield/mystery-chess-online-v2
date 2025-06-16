@@ -44,7 +44,7 @@
         <div class="piece"
           *ngIf="tile.piece"
           cdkDrag [cdkDragData]="{x: i, y: j, piece: tile.piece}"
-          [cdkDragDisabled]="(tile.piece.alliance != currentTurn) || (playerColor != currentTurn) || isSpectator"
+          [cdkDragDisabled]="(tile.piece.alliance != currentTurn) || (playerColor != currentTurn && !isLocal) || isSpectator"
           (cdkDragStarted)="drag($any($event))" 
           [class.mysterious]="tile.piece.isMysterious"
         >
@@ -122,10 +122,10 @@
 
     <div class="game-info">
       <div class="player-info">
-        <div *ngIf="!isSpectator">Your color: {{ playerColor ? 'White' : 'Black'}}</div>
+        <div *ngIf="!isSpectator && !isLocal">Your color: {{ playerColor ? 'White' : 'Black'}}</div>
         <div>Current turn: {{ currentTurn ? 'White' : 'Black' }}</div>
       </div>
-      <div style="display: flex;padding: 15px; justify-content: space-around; ">
+      <div style="display: flex;padding: 15px; justify-content: space-around;" *ngIf="!isLocal">
         <button type="button" (click)="refresh()">Restart game</button>
         <button type="button" (click)="undo()" *ngIf="playerColor != currentTurn">Undo</button>
         <button type="button" (click)="getBotMove()" *ngIf="false && !engageBot">bot move</button>

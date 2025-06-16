@@ -50,6 +50,7 @@ export class GameboardComponent implements OnInit {
 	public lastMoveCoordinates?: any;
 
 	public engageBot = false;
+	public isLocal = false;
 
 	public playerName?: string ;
 
@@ -84,6 +85,13 @@ export class GameboardComponent implements OnInit {
 			console.log('play the bot?')
 			this.engageBot = true;
 			this.playerColor = this.AllianceEnum.WHITE
+			return;
+		}
+
+		if (segments[segments.length - 1] == 'local') {
+			console.log('play locally?')
+			this.engageBot = false;
+			this.isLocal = true;
 			return;
 		}
 

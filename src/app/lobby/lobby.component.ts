@@ -39,10 +39,15 @@ export class LobbyComponent {
         console.log('lobby constructor');
     }
 
-    public createGame(botGame = false) {
+    public createGame(botGame = false, localGame = false) {
         if (botGame) {
             this.router.navigate(['/game/bot'])
             return
+        }
+
+        if (localGame) {
+            this.router.navigate(['/game/local'])
+            return;
         }
         this.socket.emit("createGame");
     }

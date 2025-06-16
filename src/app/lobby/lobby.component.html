@@ -7,6 +7,8 @@
         {{ game.player1Name }} - {{ game.player2Name }}
     </div>
 </ng-container>
-<button (click)="createGame()" class="create-game">New multiplayer game</button>
+<button (click)="createGame()" class="create-game">New online game</button>
 <br/>
 <button (click)="createGame(true)" class="create-game">Play the bot</button>
+<br/>
+<button (click)="createGame(false, true)" class="create-game">Local Game</button>
