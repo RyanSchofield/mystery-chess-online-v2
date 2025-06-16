@@ -25,6 +25,7 @@ export class LobbyComponent {
     ) {
         // this.socket = io("http://192.168.1.6:3000");
         this.socket = io();
+        // this.socket = io("http://localhost:3000")
         this.socket.on("gamesList", (games: any) => {
             this.games = games;
             console.log('got some games', games)
@@ -38,8 +39,12 @@ export class LobbyComponent {
         console.log('lobby constructor');
     }
 
-    public createGame() {
-        this.socket.emit("createGame", {});
+    public createGame(botGame = false) {
+        if (botGame) {
+            this.router.navigate(['/game/bot'])
+            return
+        }
+        this.socket.emit("createGame");
     }
 
     public joinGame(game: Game) {

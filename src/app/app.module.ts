@@ -15,6 +15,7 @@ const appRoutes: Routes = [
   { path: 'start', component: LoginComponent },
   { path: 'lobby', component: LobbyComponent },
   { path: 'game/:id', component: GameboardComponent },
+  { path: 'game/bot', component: GameboardComponent },
   { path: '', component: LoginComponent }
 ];
 

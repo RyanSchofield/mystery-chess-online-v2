@@ -71,10 +71,22 @@ export class GameboardComponent implements OnInit {
 		// this.socket = io("http://192.168.50.12:3000");
 		//test
 		this.socket = io(); // DEBUG
+
+		// this.socket = io("http://localhost:3000")
 		// console.log('cookie', document.cookie);
 		// document.cookie = "username=John Doe, expires=Thu, 18 Dec 2013 12:00:00 UTC";
 		// console.log('cookie', document.cookie);
 		// console.log('username', localStorage.getItem('username'));
+
+		const url = this.router.url;
+		const segments = url.split('/').filter(segment => segment);
+		if (segments[segments.length - 1] == 'bot') {
+			console.log('play the bot?')
+			this.engageBot = true;
+			this.playerColor = this.AllianceEnum.WHITE
+			return;
+		}
+
 		let username = localStorage.getItem('username');
 		if (username) {
 			this.playerName = username as string;
